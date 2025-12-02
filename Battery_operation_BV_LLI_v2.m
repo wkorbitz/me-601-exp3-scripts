@@ -1,6 +1,9 @@
 % Li-ion lumped model
 % Runs open-circuit and simple kinetic+ohmic model vs SoC
 
+% change xnomin/max and xprmin/max to match pristine cell data
+% adjust LLI value to match degraded cell data 
+
 clearvars
 close all
 clc
@@ -13,18 +16,18 @@ alfa = 0.5;              % charge transfer symmetry factor (dimensionless)
 b    = R*T/F/alfa;       % prefactor in overpotential expression (V)
 
 %% ----------------- DEGRADATION / CAPACITY -----------------
-LLI    = 0.00;           % Loss of lithium inventory (fraction), 0..1
-C_n    = 2.5 * (1 - LLI);% Nominal battery capacity [Ah] (affected by LLI)
+LLI    = 0.268;           % Loss of lithium inventory (fraction), 0..1
+C_n    = 41 / 1000 * (1 - LLI);% Nominal battery capacity [Ah] (affected by LLI)
 
 %% ----------------- NEGATIVE ELECTRODE PARAMETERS --------------
-xnomin = 1e-6;           % stoichiometry lower bound (neg)
-xnomax = 0.7;            % stoichiometry upper bound (neg)
+xnomin = 1e-3;           % stoichiometry lower bound (neg)
+xnomax = 0.8;            % stoichiometry upper bound (neg)
 nn     = 2;              % exponent to map stoichiometry->activity
 Fkn    = 10;             % scale for j0 (A) - empirical parameter
 E0n    = 0.1;            % reference potential negative electrode [V]
 
 %% ----------------- POSITIVE ELECTRODE PARAMETERS --------------
-xprmin = 0.06;           % positive electrode reference stoich min
+xprmin = 0.03;           % positive electrode reference stoich min
 xprmax = 0.9;
 xpomin = 1 - xprmax;     % mapping used by original code
 xpomax = 1 - xprmin;
